@@ -6,6 +6,7 @@ name: CI
 # y <sha8>-preview (solo amd64) con los borradores visibles, para la instancia de revision
 # detras de Authentik.
 # CI no toca el tag desplegado: el bump es un PR en k3s-rancher, a proposito.
+# Sin provenance: la atestacion copia el payload del evento de push, que lleva el email de la cuenta.
 
 on:
   pull_request:
@@ -80,7 +81,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name == 'push' }}
           tags: ghcr.io/bysalcedo/portfolio:${{ steps.tag.outputs.tag }}
-          provenance: true
+          provenance: false
           sbom: true
 
       - name: Build de revision (y push en main)
@@ -91,7 +92,7 @@ jobs:
           platforms: linux/amd64
           push: ${{ github.event_name == 'push' }}
           tags: ghcr.io/bysalcedo/portfolio:${{ steps.tag.outputs.tag }}-preview
-          provenance: true
+          provenance: false
           sbom: true
 
       - name: Resumen
