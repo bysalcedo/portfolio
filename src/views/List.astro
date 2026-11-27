@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import CaseCards from '../components/CaseCards.astro';
+import PostRows from '../components/PostRows.astro';
+import { otherLang, routes, t, type Lang } from '../i18n/ui';
+import { entries } from '../lib/content';
+
+interface Props { lang: Lang; kind: 'cases' | 'blog' }
+const { lang, kind } = Astro.props;
+const cases = kind === 'cases' ? await entries('cases', lang) : [];
+const posts = kind === 'blog' ? await entries('blog', lang) : [];
+---
+<Base lang={lang} section={kind} title={t(lang, `${kind}.title`)} description={t(lang, `${kind}.intro`)} alt={routes[otherLang(lang)][kind]}>
+  <div class="page wrap">
+    <header class="page-head">
+      <p class="section-num" aria-hidden="true">{kind === 'cases' ? '02' : '03'}</p>
+      <h1 class="display" data-reveal style="--i:1">{t(lang, `${kind}.title`)}</h1>
+      <p data-reveal style="--i:2">{t(lang, `${kind}.intro`)}</p>
+    </header>
+    {kind === 'cases' ? <CaseCards lang={lang} items={cases} /> : <PostRows lang={lang} items={posts} />}
+  </div>
+</Base>

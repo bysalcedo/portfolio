@@ -1,0 +1,34 @@
+---
+import { contact, routes, t, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const r = routes[lang];
+const mail = `mailto:${contact.email}?subject=${encodeURIComponent(t(lang, 'contact.mailSubject'))}`;
+---
+<footer class="close" id="contacto">
+  <div class="wrap contact">
+    <div>
+      <p class="eyebrow">{t(lang, 'contact.heading')}</p>
+      <h2 class="display">{t(lang, 'contact.greeting')}</h2>
+      <p class="intro">{t(lang, 'contact.intro')}</p>
+    </div>
+    <div>
+      <a class="mail" href={mail}>{contact.email}</a>
+      <ul class="links">
+        <li><a href={contact.linkedin}>LinkedIn</a></li>
+        <li><a href={contact.github}>GitHub</a></li>
+        <li><a href={r.cv}>{t(lang, 'contact.cv')}</a></li>
+        <li><span>{t(lang, 'contact.mode')}</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap close-meta">
+    <p data-served={t(lang, 'close.served')} aria-live="polite">{t(lang, 'close.served.fallback')}</p>
+    <nav aria-label={lang === 'es' ? 'Pie' : 'Footer'}>
+      <a class="link" href={r.rss}>RSS</a>
+      <a class="link" href="https://github.com/bysalcedo/portfolio">{t(lang, 'close.source')}</a>
+      <span>Cantabria, {new Date().getFullYear()}</span>
+    </nav>
+  </div>
+</footer>

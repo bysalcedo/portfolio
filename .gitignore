@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-preview/
+.astro/
+# Originales descargados por la skill de diseno: en el repo van las versiones webp de public/img.
+assets/
+.taste-skill/

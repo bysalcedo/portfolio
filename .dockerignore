@@ -1,0 +1,8 @@
+node_modules
+.astro
+.taste-skill
+assets
+src
+public
+scripts
+.git

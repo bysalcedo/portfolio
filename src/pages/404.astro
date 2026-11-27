@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import { t } from '../i18n/ui';
+---
+<Base lang="es" title={t('es', '404.title')}>
+  <div class="page wrap">
+    <header class="page-head">
+      <h1 class="display">{t('es', '404.title')}</h1>
+      <p lang="en">{t('en', '404.title')}.</p>
+    </header>
+    <p><a class="link" href="/">{t('es', '404.back')}</a> · <a class="link" href="/en/" lang="en">{t('en', '404.back')}</a></p>
+  </div>
+</Base>

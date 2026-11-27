@@ -1,0 +1,17 @@
+---
+import { routes, t, year, type Lang } from '../i18n/ui';
+import type { Entry } from '../lib/content';
+
+interface Props { lang: Lang; items: Entry<'cases'>[] }
+const { lang, items } = Astro.props;
+---
+<div class="cards">
+  {items.map((e) => (
+    <a class="card" href={`${routes[lang].cases}${e.slug}/`}>
+      <span class="meta eyebrow"><span>{e.data.kind}</span><span class="nums">{year(e.data.date)}</span></span>
+      <h3>{e.data.title}{e.data.draft && <span class="tag">{t(lang, 'draft')}</span>}{e.fallback && <span class="tag" lang="es">ES</span>}</h3>
+      <p>{e.data.description}</p>
+      {e.data.result && <p class="result">{e.data.result}</p>}
+    </a>
+  ))}
+</div>

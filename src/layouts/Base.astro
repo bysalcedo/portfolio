@@ -1,0 +1,75 @@
+---
+import '@fontsource/archivo-black/latin-400.css';
+import '../styles/global.css';
+import Close from '../components/Close.astro';
+import { otherLang, routes, t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  // Ruta equivalente en el otro idioma; null si no existe.
+  alt?: string | null;
+  section?: 'cases' | 'blog' | 'cv';
+  type?: 'website' | 'article';
+}
+
+const { lang, title, description = t(lang, 'site.description'), alt = null, section, type = 'website' } = Astro.props;
+const fullTitle = title ? `${title} · Daniel Salcedo` : t(lang, 'site.title');
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const other = otherLang(lang);
+const r = routes[lang];
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Daniel Salcedo',
+  jobTitle: lang === 'es' ? 'Ingeniero cloud' : 'Cloud engineer',
+  address: { '@type': 'PostalAddress', addressRegion: 'Cantabria', addressCountry: 'ES' },
+  url: 'https://bysalcedo.com/',
+  sameAs: ['https://github.com/bysalcedo'],
+};
+---
+<!doctype html>
+<html lang={lang} id="top">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alt && <link rel="alternate" hreflang={lang} href={canonical} />}
+    {alt && <link rel="alternate" hreflang={other} href={new URL(alt, Astro.site)} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="Daniel Salcedo" href={r.rss} />
+    <meta name="theme-color" content="#070D0A" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline src="/js/boot.js"></script>
+    <script is:inline src="/js/site.js" defer></script>
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">{t(lang, 'skip')}</a>
+    <header class="bar">
+      <div class="wrap">
+        <a class="wordmark" href={r.home}><img src="/favicon.svg" alt="" width="24" height="24" />/bySalcedo</a>
+        <nav aria-label={lang === 'es' ? 'Principal' : 'Main'}>
+          <a class="link" href={r.cases} aria-current={section === 'cases' ? 'page' : undefined}>{t(lang, 'nav.cases')}</a>
+          <a class="link" href={r.blog} aria-current={section === 'blog' ? 'page' : undefined}>{t(lang, 'nav.blog')}</a>
+          <a class="link hide-sm" href="#contacto">{t(lang, 'nav.contact')}</a>
+          <a class="link" href={alt ?? routes[other].home} hreflang={other} lang={other}>{lang === 'es' ? 'EN' : 'ES'}</a>
+          <a class="button" href={r.cv} aria-current={section === 'cv' ? 'page' : undefined}>{t(lang, 'nav.cv')}</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <Close lang={lang} />
+  </body>
+</html>

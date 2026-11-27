@@ -1,0 +1,8 @@
+---
+import EntryPage from '../../views/EntryPage.astro';
+import { staticPaths } from '../../lib/content';
+
+export const getStaticPaths = () => staticPaths('blog', 'es');
+const { entry, hasAlt } = Astro.props;
+---
+<EntryPage lang="es" kind="blog" entry={entry} hasAlt={hasAlt} />

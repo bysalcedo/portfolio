@@ -1,0 +1,45 @@
+# Lo procesa envsubst al arrancar (entrypoint de la imagen oficial): solo sustituye variables de
+# entorno definidas, asi que $uri y $hostname llegan intactas a nginx.
+server {
+    listen 8080;
+    server_name _;
+    root /usr/share/nginx/html;
+    server_tokens off;
+    absolute_redirect off;
+
+    gzip on;
+    gzip_types text/css application/javascript text/javascript application/json image/svg+xml application/xml text/plain;
+
+    # Lo vivo de la portada: que pod (hostname) y que nodo han servido la visita.
+    location = /served-by.json {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "no-store" always;
+        default_type application/json;
+        return 200 '{"pod":"$hostname","node":"${NODE_NAME}"}';
+    }
+
+    location = /healthz {
+        access_log off;
+        default_type text/plain;
+        return 200 'ok';
+    }
+
+    # Ficheros con hash en el nombre: cache para siempre.
+    location /_astro/ {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+    }
+
+    location /img/ {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "public, max-age=2592000" always;
+    }
+
+    location / {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "no-cache" always;
+        try_files $uri $uri/ =404;
+    }
+
+    error_page 404 /404.html;
+}

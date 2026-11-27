@@ -1,0 +1,41 @@
+# Unica fuente de /cv. El CV completo no se publica: se manda por email a quien lo pida.
+name: Daniel Salcedo
+headline: Ingeniero cloud y de plataforma
+location: Cantabria, España · Remoto o híbrido
+now: >-
+  Desde 2019 trabajo en el departamento Multicloud de Minsait (Indra) como Technical Lead y
+  arquitecto cloud. Llevo un equipo de cuatro ingenieros y soy el referente técnico del
+  departamento. Diseño landing zones en Azure, AWS, Google Cloud y OCI conectadas a los servicios
+  corporativos de red, seguridad, monitorización y backup, y las despliego como código con
+  Terraform y pipelines CI/CD. En 2026 dirigí la apertura de dos regiones nuevas en cada uno de
+  AWS, Azure y Google Cloud. También conecto centros de datos con la nube, ajusto el gasto con
+  FinOps y diseño entornos Zero Trust que cumplen GDPR, ISO 27001 y SOC 2.
+home: >-
+  Opero Ebro como si fuera producción: un cluster RKE2 de seis nodos sobre tres hosts
+  Proxmox, con unas treinta aplicaciones desplegadas por GitOps con ArgoCD, SSO con Authentik en
+  todas, backups con Velero que se restauran solos cada semana y ningún puerto abierto a internet.
+  Lo que aprendo ahí está en los casos y los postmortems de esta web.
+before: >-
+  De 2016 a 2019 fui técnico de sistemas en Io Digital X: entornos en AWS y Azure,
+  servidores Linux y Windows y la migración del correo a Office 365.
+skills:
+  - group: Cloud
+    items: [Azure, AWS, Google Cloud, OCI, Cloudflare]
+  - group: Arquitectura
+    items: [Landing zones, Híbrido y multicloud, Alta disponibilidad, Recuperación ante desastres]
+  - group: Kubernetes
+    items: [RKE2, AKS, EKS, GKE, Helm, ArgoCD, Velero]
+  - group: IaC y CI/CD
+    items: [Terraform, Ansible, Bicep, CloudFormation, GitHub Actions, GitLab, Renovate]
+  - group: Redes
+    items: [VPN, ExpressRoute, Direct Connect, Interconnect, FastConnect]
+  - group: Seguridad
+    items: [IAM y RBAC, SSO con OIDC, MFA, Zero Trust, ISO 27001, GDPR]
+  - group: Observabilidad
+    items: [Prometheus, Grafana, Loki, Azure Monitor, CloudWatch]
+  - group: Equipo
+    items: [Equipo de cuatro, Liderazgo técnico, Coordinación entre áreas, FinOps]
+education:
+  - Técnico Superior en Administración de Sistemas Informáticos en Red, IES Alisal (Santander)
+  - Técnico en Sistemas Microinformáticos y Redes, IES Alisal (Santander)
+languages: Español nativo · Inglés B2

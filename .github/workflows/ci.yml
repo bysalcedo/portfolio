@@ -1,0 +1,111 @@
+---
+name: CI
+
+# PR: construye, comprueba y prueba la imagen sin publicarla.
+# Push a main: ademas publica ghcr.io/bysalcedo/portfolio:<sha8> para amd64 (cluster) y arm64 (OCI),
+# y <sha8>-preview (solo amd64) con los borradores visibles, para la instancia de revision
+# detras de Authentik.
+# CI no toca el tag desplegado: el bump es un PR en k3s-rancher, a proposito.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Saneado del contenido publico
+        env:
+          SANITIZE_DENYLIST: ${{ secrets.SANITIZE_DENYLIST }}
+        run: npm run sanitize
+
+      - run: npx astro check
+
+      - run: npm run build
+
+      - name: Build de revision (con borradores)
+        run: npx astro build --outDir dist-preview
+        env:
+          SHOW_DRAFTS: "1"
+
+      - name: Enlaces internos
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: --offline --root-dir ${{ github.workspace }}/dist --no-progress 'dist/**/*.html'
+          fail: true
+
+      - name: Tag
+        id: tag
+        run: echo "tag=$(git rev-parse --short=8 HEAD)" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Login en ghcr.io
+        if: github.event_name == 'push'
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build (y push en main)
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name == 'push' }}
+          tags: ghcr.io/bysalcedo/portfolio:${{ steps.tag.outputs.tag }}
+          provenance: true
+          sbom: true
+
+      - name: Build de revision (y push en main)
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          build-args: DIST=dist-preview
+          platforms: linux/amd64
+          push: ${{ github.event_name == 'push' }}
+          tags: ghcr.io/bysalcedo/portfolio:${{ steps.tag.outputs.tag }}-preview
+          provenance: true
+          sbom: true
+
+      - name: Resumen
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+          PUSHED: ${{ github.event_name == 'push' }}
+        run: |
+          {
+            echo "### portfolio"
+            echo ""
+            echo "- Imagen: \`ghcr.io/bysalcedo/portfolio:${TAG}\`"
+            echo "- Revision (borradores visibles): \`ghcr.io/bysalcedo/portfolio:${TAG}-preview\`"
+            echo "- Publicada: \`${PUSHED}\`"
+            echo ""
+            echo "Para desplegarla: PR en k3s-rancher cambiando el tag en"
+            echo "\`kubernetes/workloads/portfolio/portfolio.yaml\`."
+          } >> "$GITHUB_STEP_SUMMARY"

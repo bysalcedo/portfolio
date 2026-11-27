@@ -1,0 +1,17 @@
+---
+import { t, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const [before, after] = t(lang, 'term.comment').split('{ms}');
+---
+<figure class="term" aria-label={t(lang, 'term.label')}>
+  <figcaption class="term-bar"><span></span><span></span><span></span><b>{t(lang, 'term.title')}</b></figcaption>
+  <pre><span class="p">$</span> curl -s /served-by.json
+{"{"}
+  "pod": "<span class="v" data-live="pod">…</span>",
+  "node": "<span class="v" data-live="node">…</span>"
+{"}"}
+<span class="c">{before}<span data-live="ms">…</span>{after}</span>
+<span class="p">$</span> <span class="cursor" aria-hidden="true"></span></pre>
+</figure>

@@ -1,0 +1,20 @@
+---
+import { formatShort, routes, t, type Lang } from '../i18n/ui';
+import type { Entry } from '../lib/content';
+
+interface Props { lang: Lang; items: Entry<'blog'>[] }
+const { lang, items } = Astro.props;
+---
+<ul class="rows">
+  {items.map((p) => (
+    <li>
+      <a href={`${routes[lang].blog}${p.slug}/`}>
+        <time class="date nums" datetime={p.data.date.toISOString()}>{formatShort(p.data.date)}</time>
+        <span class="title">{p.data.title}{p.data.draft && <span class="tag">{t(lang, 'draft')}</span>}{p.fallback && <span class="tag" lang="es">ES</span>}</span>
+        <span class="tech">{t(lang, p.data.format === 'articulo' ? 'blog.articulo' : 'blog.postmortem')}</span>
+        <span class="desc">{p.data.description}</span>
+        <span class="stack">{p.data.stack.slice(0, 3).join(' · ')}</span>
+      </a>
+    </li>
+  ))}
+</ul>

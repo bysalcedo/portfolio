@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="96" fill="#6DBB8B"/>
+  <g fill="none" stroke="#070D0A" stroke-width="16">
+    <g id="fav-arm"><path d="M58,46 Q100,90 142,46" stroke-linecap="round"/></g>
+    <use href="#fav-arm" transform="rotate(90 100 100)"/>
+    <use href="#fav-arm" transform="rotate(180 100 100)"/>
+    <use href="#fav-arm" transform="rotate(270 100 100)"/>
+  </g>
+  <g fill="#070D0A">
+    <g id="fav-balls"><circle cx="58" cy="46" r="15"/><circle cx="142" cy="46" r="15"/></g>
+    <use href="#fav-balls" transform="rotate(90 100 100)"/>
+    <use href="#fav-balls" transform="rotate(180 100 100)"/>
+    <use href="#fav-balls" transform="rotate(270 100 100)"/>
+    <circle cx="100" cy="100" r="11"/>
+  </g>
+</svg>

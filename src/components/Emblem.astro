@@ -1,0 +1,21 @@
+---
+// Emblema /bySalcedo, acabado contorno (marca-bysalcedo.md): decorativo, de fondo.
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+<svg class={cls} viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+  <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="11" />
+  <g fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="round">
+    <path d="M58,46 Q100,90 142,46" />
+    <path d="M58,46 Q100,90 142,46" transform="rotate(90 100 100)" />
+    <path d="M58,46 Q100,90 142,46" transform="rotate(180 100 100)" />
+    <path d="M58,46 Q100,90 142,46" transform="rotate(270 100 100)" />
+  </g>
+  <g fill="currentColor">
+    <circle cx="58" cy="46" r="15" /><circle cx="142" cy="46" r="15" />
+    <circle cx="58" cy="46" r="15" transform="rotate(90 100 100)" /><circle cx="142" cy="46" r="15" transform="rotate(90 100 100)" />
+    <circle cx="58" cy="46" r="15" transform="rotate(180 100 100)" /><circle cx="142" cy="46" r="15" transform="rotate(180 100 100)" />
+    <circle cx="58" cy="46" r="15" transform="rotate(270 100 100)" /><circle cx="142" cy="46" r="15" transform="rotate(270 100 100)" />
+    <circle cx="100" cy="100" r="11" />
+  </g>
+</svg>

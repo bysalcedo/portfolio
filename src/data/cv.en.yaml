@@ -1,0 +1,41 @@
+# Unica fuente de /en/cv. El CV completo no se publica: se manda por email a quien lo pida.
+name: Daniel Salcedo
+headline: Cloud and platform engineer
+location: Cantabria, Spain · Remote or hybrid
+now: >-
+  Since 2019 I have worked in the Multicloud department at Minsait (Indra) as Technical Lead and
+  Cloud Architect. I run a team of four engineers and I am the department's technical reference.
+  I design landing zones on Azure, AWS, Google Cloud and OCI connected to the corporate network,
+  security, monitoring and backup services, and deploy them as code with Terraform and CI/CD
+  pipelines. In 2026 I led the opening of two new regions on each of AWS, Azure and Google Cloud.
+  I also connect data centers to the cloud, keep spend in check with FinOps and design Zero Trust
+  environments that meet GDPR, ISO 27001 and SOC 2.
+home: >-
+  I run Ebro as if it were production: a six-node RKE2 cluster on three Proxmox hosts,
+  with about thirty applications deployed through GitOps with ArgoCD, SSO with Authentik on all of
+  them, Velero backups that restore themselves every week and no port open to the internet. What I
+  learn there is in the case studies and postmortems on this site.
+before: >-
+  From 2016 to 2019 I was a systems technician at Io Digital X: AWS and Azure
+  environments, Linux and Windows servers and the company's move to Office 365 email.
+skills:
+  - group: Cloud
+    items: [Azure, AWS, Google Cloud, OCI, Cloudflare]
+  - group: Architecture
+    items: [Landing zones, Hybrid and multicloud, High availability, Disaster recovery]
+  - group: Kubernetes
+    items: [RKE2, AKS, EKS, GKE, Helm, ArgoCD, Velero]
+  - group: IaC and CI/CD
+    items: [Terraform, Ansible, Bicep, CloudFormation, GitHub Actions, GitLab, Renovate]
+  - group: Networking
+    items: [VPN, ExpressRoute, Direct Connect, Interconnect, FastConnect]
+  - group: Security
+    items: [IAM and RBAC, SSO with OIDC, MFA, Zero Trust, ISO 27001, GDPR]
+  - group: Observability
+    items: [Prometheus, Grafana, Loki, Azure Monitor, CloudWatch]
+  - group: Team
+    items: [Team of four, Technical leadership, Cross-team coordination, FinOps]
+education:
+  - Higher vocational degree in Network Computer Systems Administration, IES Alisal (Santander)
+  - Vocational degree in Microcomputer Systems and Networks, IES Alisal (Santander)
+languages: Spanish (native) · English B2

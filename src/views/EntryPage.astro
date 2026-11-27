@@ -1,0 +1,42 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { formatDate, otherLang, routes, t, type Lang } from '../i18n/ui';
+import type { Entry } from '../lib/content';
+
+interface Props {
+  lang: Lang;
+  kind: 'cases' | 'blog';
+  entry: Entry<'cases'> | Entry<'blog'>;
+  // El otro idioma tiene version propia de esta entrada.
+  hasAlt: boolean;
+}
+const { lang, kind, entry, hasAlt } = Astro.props;
+const { Content } = await render(entry);
+const { title, description, date, stack, draft } = entry.data;
+const result = 'result' in entry.data ? entry.data.result : undefined;
+const label = 'kind' in entry.data ? entry.data.kind : t(lang, entry.data.format === 'articulo' ? 'blog.articulo' : 'blog.postmortem');
+const alt = hasAlt ? `${routes[otherLang(lang)][kind]}${entry.slug}/` : null;
+---
+<Base lang={lang} section={kind} title={title} description={description} alt={alt} type="article">
+  <article class="page wrap" lang={entry.lang}>
+    <header class="page-head">
+      <p class="eyebrow" data-reveal>{label}</p>
+      <h1 class="display" data-reveal style="--i:1">{title}</h1>
+      <p data-reveal style="--i:2">{description}</p>
+      {entry.fallback && <p class="soft" lang={lang}>{t(lang, 'post.onlyIn')}</p>}
+    </header>
+    <div class="entry-grid">
+      <div class="prose"><Content /></div>
+      <aside class="entry-aside">
+        {result && <div class="result-box"><p class="eyebrow">{t(lang, 'post.result')}</p><p>{result}</p></div>}
+        <dl>
+          <dt>{lang === 'es' ? 'Fecha' : 'Date'}</dt>
+          <dd><time datetime={date.toISOString()}>{formatDate(lang, date)}</time>{draft && <span class="tag">{t(lang, 'draft')}</span>}</dd>
+        </dl>
+        {stack.length > 0 && <dl><dt>Stack</dt><dd>{stack.join(' · ')}</dd></dl>}
+        <a class="more" href={routes[lang][kind]}>{t(lang, 'post.back')}</a>
+      </aside>
+    </div>
+  </article>
+</Base>
