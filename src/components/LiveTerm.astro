@@ -4,14 +4,17 @@ import { t, type Lang } from '../i18n/ui';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const [before, after] = t(lang, 'term.comment').split('{ms}');
+// La web puede servirse desde fuera de casa (OCI); la tarjeta siempre pregunta a Ebro.
+// Si el endpoint no contesta en 3 s, la tarjeta lo dice (public/js/site.js).
+const live = 'https://ebro.bysalcedo.com/served-by.json';
 ---
-<figure class="term" aria-label={t(lang, 'term.label')}>
+<figure class="term" aria-label={t(lang, 'term.label')} data-live-src={live} data-live-offline={t(lang, 'term.offline')}>
   <figcaption class="term-bar"><span></span><span></span><span></span><b>{t(lang, 'term.title')}</b></figcaption>
-  <pre><span class="p">$</span> curl -s /served-by.json
+  <pre><span class="p">$</span> curl -s ebro/served-by.json
 {"{"}
   "pod": "<span class="v" data-live="pod">…</span>",
   "node": "<span class="v" data-live="node">…</span>"
 {"}"}
-<span class="c">{before}<span data-live="ms">…</span>{after}</span>
+<span class="c" data-live="comment">{before}<span data-live="ms">…</span>{after}</span>
 <span class="p">$</span> <span class="cursor" aria-hidden="true"></span></pre>
 </figure>

@@ -32,7 +32,8 @@ export const ui = {
     'hero.hello': 'Hola, soy',
     'term.title': 'ebro · en vivo',
     'term.comment': '# respuesta del cluster en {ms} ms, desde Cantabria',
-    'term.label': 'Datos en vivo de esta visita: qué pod y qué nodo del cluster la han servido.',
+    'term.label': 'Datos en vivo: qué pod y qué nodo del cluster Ebro han contestado a esta visita.',
+    'term.offline': '# Ebro no responde ahora mismo; esta página la sirve el respaldo en Oracle Cloud',
 
     'now.title': 'Ahora',
     'now.updated': 'Actualizado el 27 de noviembre de 2026',
@@ -84,8 +85,8 @@ export const ui = {
     'contact.intro': 'Si buscas a alguien así para tu equipo, escríbeme.',
     'contact.mailSubject': 'Hola Daniel',
 
-    'close.served.fallback': 'Esta página la sirve el cluster Ebro, desde Cantabria.',
-    'close.served': 'Esta visita la ha servido el pod {pod} en el nodo {node}.',
+    'close.served.fallback': 'Web estática servida desde Oracle Cloud; la tarjeta en vivo la contesta Ebro, desde Cantabria.',
+    'close.served': 'Esta página la ha servido {pod} en {node}.',
     'close.source': 'Código',
 
     'cv.title': 'Curriculum',
@@ -126,7 +127,8 @@ export const ui = {
     'hero.hello': 'Hi, I am',
     'term.title': 'ebro · live',
     'term.comment': '# cluster answered in {ms} ms, from Cantabria',
-    'term.label': 'Live data for this visit: which pod and which cluster node served it.',
+    'term.label': 'Live data: which pod and which node of the Ebro cluster answered this visit.',
+    'term.offline': '# Ebro is not answering right now; this page is served by the backup on Oracle Cloud',
 
     'now.title': 'Now',
     'now.updated': 'Updated on 27 November 2026',
@@ -178,8 +180,8 @@ export const ui = {
     'contact.intro': 'If you are looking for someone like this for your team, write to me.',
     'contact.mailSubject': 'Hello Daniel',
 
-    'close.served.fallback': 'This page is served by the Ebro cluster, from Cantabria.',
-    'close.served': 'This visit was served by pod {pod} on node {node}.',
+    'close.served.fallback': 'Static site served from Oracle Cloud; the live card is answered by Ebro, from Cantabria.',
+    'close.served': 'This page was served by {pod} on {node}.',
     'close.source': 'Source',
 
     'cv.title': 'Resume',
